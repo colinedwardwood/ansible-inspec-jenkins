@@ -1,14 +1,33 @@
-- hosts: all
-  roles:
-    - webserver
+- hosts: test-kitchen
   tasks:
     - name: Update yum cache
       yum: update_cache=true
-  #   - name: Install necessary packages
-  #     apt:
-  #       name: apache2
-  #       state: latest
-  #   - name: Configure Hello World virtual host.
+    - name: Install necessary packages
+      yum:
+        pkg: httpd
+        state: latest
+    - name: ensure httpd is running
+      service:
+        name: httpd 
+        state: started
+    - name: ensure httpd is enabled
+      service:
+        name: httpd
+        enabled: yes
+    - name: Create a file called '/var/www/index.html' with a simple html page.
+      copy:
+        content: <!DOCTYPE html><html><head><title>Example</title></head><body><p>This is an example of a simple HTML page with one paragraph.</p></body></html>
+        dest: /var/www/index.html
+    # - name: Open port 80 for http access
+    #   firewalld:
+    #     service: http
+    #     permanent: true
+    #     state: enabled
+    # - name: Restart the firewalld service to load in the firewall changes
+    #   service: 
+    #     name: firewalld 
+    #     state: restarted
+    #   - name: Configure Hello World virtual host.
   #     copy: src=helloworldconf dest=/etc/apache2/sites-available/helloworld.conf mode=0640
   #   - name: Create the helloworld directory
   #     file:
