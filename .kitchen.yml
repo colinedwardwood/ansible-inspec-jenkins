@@ -3,15 +3,17 @@ driver:
   name: vagrant
   provider: vmware_fusion
 
-# provisioner:
-#   hosts: test-kitchen
-#   name: ansible_playbook
-#   #roles_path: roles
-#   require_ansible_repo: true
-#   ansible_verbose: true
-#   ansible_version: 2.9.4
-#   require_chef_for_busser: false
-#   playbook: site.yml
+provisioner:
+  hosts: test-kitchen
+  name: ansible_playbook
+  require_ansible_repo: true
+  ansible_verbose: true
+  # ansible_version: latest
+  require_chef_for_busser: false
+  playbook: site.yml
+
+transport:
+  max_ssh_sessions: 6
 
 verifier:
   name: inspec
