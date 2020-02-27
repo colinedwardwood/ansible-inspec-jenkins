@@ -1,7 +1,3 @@
-# check for hello world file
-describe file('/tmp/testfile.txt') do
-  its('content') { should match('hello world')}
-end
 
 # check httpd package is installed
 describe package 'httpd' do
